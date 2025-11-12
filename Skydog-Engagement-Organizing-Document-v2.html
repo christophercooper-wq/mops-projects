@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rho ↔ Skydog Ops | HubSpot/Salesforce Audit</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.5; max-width: 8.5in; margin: 0 auto; padding: 0.75in; }
+        h1 { color: #1a1a1a; border-bottom: 2px solid #00ECC0; padding-bottom: 8px; font-size: 20pt; }
+        h2 { color: #1a1a1a; margin-top: 18pt; font-size: 14pt; border-bottom: 1px solid #ccc; padding-bottom: 4pt; }
+        h3 { color: #333; margin-top: 12pt; font-size: 12pt; }
+        table { border-collapse: collapse; width: 100%; margin: 10pt 0; font-size: 9pt; }
+        th { background-color: #00ECC0; color: #000; font-weight: bold; padding: 6px; text-align: left; border: 1px solid #999; }
+        td { padding: 6px; border: 1px solid #ccc; vertical-align: top; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        ul, ol { margin: 4pt 0; padding-left: 20pt; }
+        li { margin: 2pt 0; }
+        strong { font-weight: bold; }
+        code { background-color: #f4f4f4; padding: 1px 3px; font-family: 'Courier New', monospace; font-size: 8pt; }
+        .metadata { background-color: #f0f0f0; padding: 10px; border-left: 4px solid #00ECC0; margin-bottom: 16pt; font-size: 9pt; }
+        .metadata p { margin: 2pt 0; }
+        hr { border: none; border-top: 1px solid #ccc; margin: 12pt 0; }
+    </style>
+</head>
+<body>
+
+<h1>Rho ↔ Skydog Ops | HubSpot/Salesforce Audit & Optimization</h1>
+
+<div class="metadata">
+    <p><strong>Last Updated:</strong> 2025-11-12 | <strong>Timeline:</strong> 2-3 Months (Dec 2025 - Feb 2026)</p>
+    <p><strong>Primary DRI:</strong> Christopher Cooper (Marketing Ops) + Anthony Hwang (RevOps) | <strong>Vendor:</strong> Skydog Ops</p>
+</div>
+
+<h2>Interaction Framework</h2>
+<table>
+    <tr><th>Team/Role</th><th>Responsibilities</th></tr>
+    <tr><td><strong>Christopher (Marketing Ops)</strong></td><td>HubSpot workflow triggers, lifecycle campaign alignment, email infrastructure</td></tr>
+    <tr><td><strong>Anthony (RevOps)</strong></td><td>Salesforce/Lead Routing, key property schemas, cross-system sync</td></tr>
+    <tr><td><strong>Skydog Ops</strong></td><td>Data flow analysis, bottleneck identification, architecture recommendations, audit execution</td></tr>
+    <tr><td><strong>Engineering/Product</strong></td><td>Signup Services event emission changes (Skydog/Growth Engineering supports PRD)</td></tr>
+</table>
+
+<h2>Goals → Issues → Solutions</h2>
+<table>
+    <tr><th>Goal</th><th>Issue</th><th>Root Cause</th><th>Potential Solution</th></tr>
+    <tr>
+        <td><strong>Lead Acceleration</strong></td>
+        <td>Database Events / ETL Process During Application<br>• 40-45 min lag signup → HubSpot<br>• Sales can't act on high-intent leads in real-time</td>
+        <td>Batch warehouse syncs instead of real-time event streaming</td>
+        <td><strong>Signup Services refactoring</strong> (Engineering-led, Skydog advisory)<br>• Document bottlenecks<br>• Design event-driven architecture<br>• PRD for real-time events</td>
+    </tr>
+    <tr>
+        <td><strong>Workflow Efficiency</strong></td>
+        <td>Existing Sprawl, User/Data Flow<br>• 300+ active workflows, many conflicting<br>• 15% contact sync error rate<br>• No governance or documentation</td>
+        <td>No workflow governance, 3+ years technical debt, multiple creators</td>
+        <td><strong>Audit, Document, Consolidate, Archive</strong><br>• Pull all workflows via API → Airtable<br>• Identify conflicts (3 MQL, 40 events)<br>• Consolidate: 300+ → &lt;100<br>• Create governance framework</td>
+    </tr>
+    <tr>
+        <td><strong>Field Maintenance</strong></td>
+        <td>Data Schema, Taxonomy, Sync Properties<br>• No canonical schemas between systems<br>• 15% HubSpot ↔ SFDC sync error rate<br>• Same concept = 4 different field names</td>
+        <td>Each system uses different field names/formats</td>
+        <td><strong>Property Rationalization (5-Tier)</strong><br>• Tier 1: Core (keep)<br>• Tier 2: Attribution (standardize)<br>• Tier 3: Lifecycle (rationalize)<br>• Tier 4: Integration (audit)<br>• Tier 5: Legacy (~200 archive)</td>
+    </tr>
+    <tr>
+        <td><strong>Lifecycle Campaigns</strong></td>
+        <td>Poorly Defined Audience Goals<br>• Role confusion: Lifecycle vs. Demand Gen<br>• No MOF/BOF ownership or budget<br>• 3 qualified candidates rejected</td>
+        <td>Leadership misalignment: CRO wants TOF/pipeline, JD asked for MOF/BOF</td>
+        <td><strong>New Build Process, Segmentation</strong><br>• Define Growth vs. Lifecycle roles<br>• Lifecycle stage definitions<br>• Workshop: Attribution, segmentation<br>• Clarify org ownership</td>
+    </tr>
+    <tr>
+        <td><strong>Database Cleanup</strong></td>
+        <td>Tiering & Value Per Contact / LTV<br>• 70% dead contacts skewing metrics<br>• Inaccurate fill rates (24% vs 85% actual)<br>• HubSpot cost bloat</td>
+        <td>No sunset policy, no contact scoring, no archival process</td>
+        <td><strong>Contact Tiering + Archival</strong><br>• Tier 1: Customers<br>• Tier 2: Active Leads (&lt;90d)<br>• Tier 3: Nurture (90-365d)<br>• Tier 4: Dead (archive)</td>
+    </tr>
+</table>
+
+<h2>Skydog | Workflow Audit – Scope & Deliverables</h2>
+
+<h3>Phase 1: Discovery & Audit (Weeks 1-3)</h3>
+
+<p><strong>Deliverable 1.1: Workflow Inventory</strong></p>
+<ul>
+    <li>Pull all workflows via API → Airtable/spreadsheet</li>
+    <li>For each: trigger criteria, enrollment criteria, actions, dates, enrollments</li>
+    <li><strong>Output:</strong> Dependency matrix showing property usage</li>
+</ul>
+
+<p><strong>Deliverable 1.2: Property Schema Inventory</strong></p>
+<ul>
+    <li>Pull all properties via API (Contacts, Companies, Deals)</li>
+    <li>Document: usage, fill rate, last modified, recommendations</li>
+    <li>Categorize into 5 tiers</li>
+    <li><strong>Output:</strong> ~200 Tier 5 properties for archival</li>
+</ul>
+
+<p><strong>Deliverable 1.3: Salesforce Sync Analysis</strong></p>
+<ul>
+    <li>Export HubSpot-SFDC sync error logs (90 days)</li>
+    <li>Categorize errors: field mapping, validation, duplicates, API limits</li>
+    <li>SFDC APEX automation review</li>
+    <li><strong>Output:</strong> Error breakdown, field mapping audit, optimization plan</li>
+</ul>
+
+<p><strong>Deliverable 1.4: Cross-Functional Alignment Workshop</strong></p>
+<ul>
+    <li>Present audit findings, define Phase 2 priorities, establish RACI</li>
+    <li><strong>Output:</strong> Workshop summary, Phase 2 roadmap</li>
+</ul>
+
+<h3>Phase 2: Remediation & Implementation (Weeks 4-7)</h3>
+
+<p><strong>Deliverable 2.1: Workflow Consolidation</strong></p>
+<ul>
+    <li>Consolidate 40 event workflows → 1 template</li>
+    <li>Merge 3 MQL workflows → 1 master</li>
+    <li>Deactivate ~50 orphaned, ~20 duplicate workflows</li>
+    <li><strong>Target:</strong> 300+ → &lt;100 workflows</li>
+</ul>
+
+<p><strong>Deliverable 2.2: Salesforce Sync Optimization</strong></p>
+<ul>
+    <li>Field mapping fixes, duplicate detection, sync monitoring dashboard</li>
+    <li><strong>Target:</strong> 15% error rate → &lt;5%</li>
+</ul>
+
+<p><strong>Deliverable 2.3: Attribution Property Migration</strong></p>
+<ul>
+    <li>Consolidate 3 "Primary Inbound Channel" → 1 canonical (<code>hs_analytics_source</code>)</li>
+    <li>Update 47 workflows + 8 reports, archive old properties</li>
+</ul>
+
+<h3>Phase 3: Advisory & Strategic Roadmap (Weeks 8-10)</h3>
+
+<p><strong>Deliverable 3.1: Real-Time Event Architecture PRD</strong></p>
+<ul>
+    <li>Design: Signup Services → Event Bus → HubSpot webhook</li>
+    <li>Event schema: <code>app_started</code>, <code>step_viewed</code>, <code>step_completed</code>, etc.</li>
+    <li><strong>Output:</strong> PRD for Engineering (10-15 pages)</li>
+</ul>
+
+<p><strong>Deliverable 3.2: Progress State Service Design</strong></p>
+<ul>
+    <li>Real-time Sales dashboard ("who's stuck at step 5")</li>
+    <li>Redis/Firebase cache, API spec</li>
+    <li><strong>Output:</strong> Design doc for Engineering (5-10 pages)</li>
+</ul>
+
+<h2>Tech Stack Context</h2>
+
+<table>
+    <tr><th>Priority</th><th>Need</th><th>Current Solution</th><th>Gap</th></tr>
+    <tr><td><strong>[P0]</strong></td><td>Send email</td><td>✅ HubSpot</td><td>Satisfied</td></tr>
+    <tr><td><strong>[P2]</strong></td><td>Branded emails with dynamic content</td><td>🟡 HubSpot (limited)</td><td>Need component library + CI/CD</td></tr>
+    <tr><td><strong>[P1]</strong></td><td>Multi-channel (SMS, Push, In-App)</td><td>❌ None</td><td>Future: Customer.io/Braze</td></tr>
+    <tr><td><strong>[P1]</strong></td><td>Automated journeys (Segments + Behavior)</td><td>🟡 HubSpot (sprawl)</td><td>Optimize Phase 2</td></tr>
+    <tr><td><strong>[P1]</strong></td><td>Track user behavior on Rho.co</td><td>❌ None</td><td>Need: Segment/Amplitude (out of scope)</td></tr>
+    <tr><td><strong>[P0]</strong></td><td>"Seamless" Salesforce integration</td><td>🟡 HubSpot (15% error)</td><td>Optimize Phase 2</td></tr>
+</table>
+
+<h2>Growth vs. Lifecycle: Role Clarity</h2>
+
+<table>
+    <tr><th>Function</th><th>Focus</th><th>Responsibilities</th><th>Metrics</th></tr>
+    <tr>
+        <td><strong>Growth</strong></td>
+        <td>Rapid acquisition and activation</td>
+        <td>• Short-term testing<br>• TOF/MID-funnel optimization<br>• Paid acquisition, SEO, CRO</td>
+        <td>CAC, MQL/SQL volume, conversion rates, velocity</td>
+    </tr>
+    <tr>
+        <td><strong>Lifecycle</strong></td>
+        <td>Long-term retention and engagement</td>
+        <td>• Customer journey orchestration<br>• Post-purchase activation, retention, expansion<br>• Email, SMS, in-app messaging</td>
+        <td>LTV, churn rate, retention, engagement, expansion revenue</td>
+    </tr>
+</table>
+
+<p><strong>Current Gap:</strong> Growth team (Jeremy) has zero direct reports. Marketing Ops (Christopher) reports to RevOps (Anthony), not Growth.</p>
+
+<h2>Key Questions Requiring Leadership Alignment</h2>
+
+<table>
+    <tr><th>Question</th><th>Impact</th><th>Current State</th><th>Blocker</th></tr>
+    <tr>
+        <td>What team owns data infrastructure?</td>
+        <td>Who owns event emission, ETL contracts, schema governance?</td>
+        <td>Unclear: Eng? Data? RevOps? MOps?</td>
+        <td>Blocks Phase 3 (real-time events)</td>
+    </tr>
+    <tr>
+        <td>What team owns tool acquisition?</td>
+        <td>Who approves Segment, Amplitude, Customer.io?</td>
+        <td>Unclear: Growth? Marketing? RevOps?</td>
+        <td>Blocks multi-channel (SMS, Push)</td>
+    </tr>
+    <tr>
+        <td>How does org support MOF/BOF?</td>
+        <td>Budget for lifecycle? Retention/expansion ownership?</td>
+        <td>Tommy (CRO) focused on TOF/pipeline</td>
+        <td>Blocks Lifecycle Manager hire</td>
+    </tr>
+    <tr>
+        <td>Who defines lifecycle stages?</td>
+        <td>MQL/SQL/Opportunity entry/exit criteria?</td>
+        <td>Conflicting HubSpot vs SFDC definitions</td>
+        <td>Blocks consistent funnel reporting</td>
+    </tr>
+</table>
+
+<p><strong>Skydog Deliverable:</strong> Cross-functional alignment workshop with RACI chart (Phase 1, Week 4)</p>
+
+<h2>Missing Aspects & Cross-Team Functions</h2>
+
+<ol>
+    <li><strong>Email Infrastructure:</strong> Component library CI/CD (Phase 2) - Christopher + Skydog</li>
+    <li><strong>Events Automation:</strong> Luma webhook, Airtable registry - Christopher (parallel)</li>
+    <li><strong>Data Team:</strong> Add to RACI for ETL contracts, schema governance</li>
+    <li><strong>Sales Team:</strong> Add to RACI for lead acceleration, real-time dashboard</li>
+    <li><strong>Brand Team:</strong> Add to RACI for email component library guidelines</li>
+    <li><strong>Monitoring:</strong> Slack alerts, weekly reports (Phase 2, Week 6)</li>
+    <li><strong>Governance:</strong> Workflow approval, property creation standards (Phase 2 deliverable)</li>
+</ol>
+
+<h2>Timeline & Milestones</h2>
+
+<table>
+    <tr><th>Milestone</th><th>Date</th><th>Deliverables</th><th>Success Criteria</th></tr>
+    <tr><td><strong>Phase 1</strong></td><td>Week 3 (Dec 22)</td><td>Workflow/property audit, SFDC sync analysis, workshop</td><td>Reports delivered, RACI agreed, priorities confirmed</td></tr>
+    <tr><td><strong>Phase 2 Mid</strong></td><td>Week 5 (Jan 12)</td><td>50% workflow consolidation, sync fixes started</td><td>Workflows &lt;150, error 15%→10%</td></tr>
+    <tr><td><strong>Phase 2</strong></td><td>Week 7 (Jan 26)</td><td>Workflows &lt;100, sync &lt;5%, attribution, CI/CD</td><td>All acceptance criteria met</td></tr>
+    <tr><td><strong>Phase 3</strong></td><td>Week 10 (Feb 16)</td><td>Event PRD, progress state design, governance</td><td>Engineering specs, decision framework</td></tr>
+</table>
+
+<h2>Communication</h2>
+<ul>
+    <li><strong>Weekly Sync:</strong> Monday, 30 min (Christopher + Anthony + Skydog)</li>
+    <li><strong>Slack:</strong> <code>#skydog-engagement</code> (async)</li>
+    <li><strong>Phase Demos:</strong> End Phase 1/2/3 (60 min, all stakeholders)</li>
+</ul>
+
+<hr>
+<p style="font-size: 8pt; color: #666;"><strong>Document Maintained:</strong> GitHub (version control) | Google Drive (collaborative)<br><strong>Next Review:</strong> Skydog contract signing (target: Nov 25, 2025)</p>
+
+</body>
+</html>
