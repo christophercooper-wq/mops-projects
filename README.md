@@ -32,12 +32,14 @@ Rho's marketing operations infrastructure suffers from:
 |----------|-------------|--------|
 | [01-root-cause-analysis.md](./01-root-cause-analysis.md) | Data flow failures, 45-minute gap, taxonomy issues | ✅ Complete |
 | [02-organizational-assessment.md](./02-organizational-assessment.md) | Org structure, role misalignment, leadership gaps | ✅ Complete |
-| [03-events-automation.md](./03-events-automation.md) | Luma integration, Airtable registry, automation MVP | 🟡 In Progress |
-| [04-email-template-architecture.md](./04-email-template-architecture.md) | Storyblok migration, component library, scalability | 📋 Planned |
-| [05-hubspot-audit-requirements.md](./05-hubspot-audit-requirements.md) | Workflow bloat analysis, property cleanup, tooling | 🟡 In Progress |
+| [03-events-automation.md](./03-events-automation.md) | Luma integration, Airtable registry, automation MVP | ✅ Complete |
+| [04-email-template-architecture.md](./04-email-template-architecture.md) | Storyblok migration, component library, scalability | ✅ Complete |
+| [05-hubspot-audit-requirements.md](./05-hubspot-audit-requirements.md) | Workflow bloat analysis, property cleanup, tooling | ✅ Complete |
 | [06-vendor-sow-skydog.md](./06-vendor-sow-skydog.md) | 3-phase engagement scope, deliverables, $32K budget | ✅ Complete |
+| [06-vendor-sow-skydog-REFINED.md](./06-vendor-sow-skydog-REFINED.md) | Extended 12-week engagement with enhanced scope, $37K budget | ✅ Complete |
+| **[Skydog-Engagement-Organizing-Document.md](./Skydog-Engagement-Organizing-Document.md)** | **Primary organizing document: Goals, Issues, Solutions, Skydog audit scope** | ✅ **Complete** |
 | [07-mops-action-plan.md](./07-mops-action-plan.md) | 8-week milestones, priority matrix, success criteria | ✅ Complete |
-| [08-technical-architecture.md](./08-technical-architecture.md) | Event emission specs, ETL contracts, data schemas | 📋 Planned |
+| [08-technical-architecture.md](./08-technical-architecture.md) | Event emission specs, ETL contracts, data schemas | ✅ Complete |
 
 ### **Project Management**
 
@@ -50,9 +52,9 @@ Rho's marketing operations infrastructure suffers from:
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [10-component-library-cicd.md](./10-component-library-cicd.md) | Email template doc site, HubSpot deployment automation | 📋 Planned |
-| [11-events-management-ui.md](./11-events-management-ui.md) | CSV normalization, source-agnostic field mapping | 📋 Planned |
-| [12-storyblok-integration.md](./12-storyblok-integration.md) | CMS layer for email, serverless send logic (Q1 2026) | 📋 Planned |
+| [10-component-library-cicd.md](./10-component-library-cicd.md) | Email template doc site, HubSpot deployment automation | ✅ Complete |
+| [11-events-management-ui.md](./11-events-management-ui.md) | CSV normalization, source-agnostic field mapping | ✅ Complete |
+| [12-storyblok-integration.md](./12-storyblok-integration.md) | CMS layer for email, serverless send logic (Q1 2026) | ✅ Complete |
 
 ---
 
@@ -260,9 +262,10 @@ Signup Services
 3. Review [06-vendor-sow-skydog.md](./06-vendor-sow-skydog.md) for budget details
 
 ### **For Vendors (Skydog Ops)**
-1. Review [06-vendor-sow-skydog.md](./06-vendor-sow-skydog.md) for full SOW
-2. Review [05-hubspot-audit-requirements.md](./05-hubspot-audit-requirements.md) for audit scope
-3. Access HubSpot/Salesforce environments (credentials via Anthony)
+1. **START HERE**: Review [Skydog-Engagement-Organizing-Document.md](./Skydog-Engagement-Organizing-Document.md) for organizing document (Goals, Issues, Solutions)
+2. Review [06-vendor-sow-skydog-REFINED.md](./06-vendor-sow-skydog-REFINED.md) for 12-week engagement scope
+3. Review [05-hubspot-audit-requirements.md](./05-hubspot-audit-requirements.md) for audit scope details
+4. Access HubSpot/Salesforce environments (credentials via Anthony)
 
 ---
 
