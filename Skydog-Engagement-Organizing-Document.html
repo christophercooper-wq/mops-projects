@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rho ↔ Skydog Ops | HubSpot/Salesforce Audit & Optimization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 1in;
+            color: #000;
+        }
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 2px solid #00ECC0;
+            padding-bottom: 10px;
+            font-size: 24pt;
+        }
+        h2 {
+            color: #1a1a1a;
+            margin-top: 24pt;
+            margin-bottom: 12pt;
+            font-size: 18pt;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 6pt;
+        }
+        h3 {
+            color: #333;
+            margin-top: 18pt;
+            margin-bottom: 9pt;
+            font-size: 14pt;
+        }
+        h4 {
+            color: #555;
+            margin-top: 12pt;
+            margin-bottom: 6pt;
+            font-size: 12pt;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12pt 0;
+        }
+        th {
+            background-color: #00ECC0;
+            color: #000;
+            font-weight: bold;
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #999;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul, ol {
+            margin: 6pt 0;
+            padding-left: 24pt;
+        }
+        li {
+            margin: 3pt 0;
+        }
+        strong {
+            font-weight: bold;
+            color: #000;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 12px;
+            border-left: 3px solid #00ECC0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.4;
+        }
+        .metadata {
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-left: 4px solid #00ECC0;
+            margin-bottom: 24pt;
+        }
+        .metadata p {
+            margin: 3pt 0;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 18pt 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Rho ↔ Skydog Ops | HubSpot/Salesforce Audit & Optimization</h1>
+
+<div class="metadata">
+    <p><strong>Document Type:</strong> Organizing Document (Audit Scope & Execution Plan)</p>
+    <p><strong>Last Updated:</strong> 2025-11-12</p>
+    <p><strong>Timeline:</strong> 2-3 Months (December 2025 - February 2026)</p>
+    <p><strong>Primary DRI:</strong> Christopher Cooper (Marketing Ops) + Anthony Hwang (RevOps)</p>
+    <p><strong>Vendor:</strong> Skydog Ops</p>
+</div>
+
+<hr>
+
+<h2>Goals</h2>
+
+<h3>Primary Objectives</h3>
+
+<ol>
+    <li><strong>Cleaner, More Reliable Data</strong>
+        <ul>
+            <li>Audit all existing data flows and automation rules</li>
+            <li>Implement data validation and normalization standards</li>
+            <li>Eliminate redundant workflows, properties, and legacy fields</li>
+        </ul>
+    </li>
+    <li><strong>Faster Speed to Lead</strong>
+        <ul>
+            <li>Reduce lag between lead signup and HubSpot visibility</li>
+            <li>Improve sync latency between HubSpot, Salesforce, and self-serve signup funnel</li>
+            <li>Establish full visibility into what data comes in, when, and through which system</li>
+        </ul>
+    </li>
+    <li><strong>Optimize Integration with Self-Serve Signup</strong>
+        <ul>
+            <li>Map and document how data flows from signup → HubSpot → Salesforce</li>
+            <li>Identify bottlenecks and inconsistencies in signup event tracking or lead enrichment</li>
+            <li>Align lifecycle triggers (welcome emails, trial starts, etc.) to real user actions in signup</li>
+            <li>Create alerting and dashboards to monitor sync health and data freshness</li>
+        </ul>
+    </li>
+    <li><strong>Improved Flexibility & Scalability</strong>
+        <ul>
+            <li>Configure HubSpot to scale efficiently and support experimentation</li>
+            <li>Enable A/B testing for emails, journeys, and lead scoring logic</li>
+            <li>Ensure system can handle increased lead volume without degradation</li>
+        </ul>
+    </li>
+    <li><strong>Better Segmentation and Targeting</strong>
+        <ul>
+            <li>Rebuild segments and lists using clean, standardized data</li>
+            <li>Align segmentation with lifecycle stages and CRM definitions</li>
+            <li>Increase refresh frequency for dynamic lists tied to real-time user behavior</li>
+        </ul>
+    </li>
+    <li><strong>Set Up Systems To Support Lifecycle Marketing Enhancements</strong>
+        <ul>
+            <li>Implement lifecycle email campaigns and referral workflows</li>
+            <li>Enable experimentation with templates, triggers, and content</li>
+            <li>Improve tracking of engagement and conversion metrics</li>
+        </ul>
+    </li>
+    <li><strong>Tracking and Attribution</strong>
+        <ul>
+            <li>Define clear attribution models (multi-touch vs. first-touch)</li>
+            <li>Improve visibility into performance by source, campaign, and signup type</li>
+            <li>Establish consistent reporting between HubSpot and Salesforce</li>
+        </ul>
+    </li>
+</ol>
+
+<hr>
+
+<h2>Issues</h2>
+
+<h3>1. Lead Acceleration</h3>
+
+<p><strong>Problem:</strong> Database Events / ETL Process During Application</p>
+<ul>
+    <li><strong>Current State:</strong> 40-45 minute lag between application signup and HubSpot visibility</li>
+    <li><strong>Root Cause:</strong> Batch warehouse syncs instead of real-time event streaming</li>
+    <li><strong>Business Impact:</strong> Sales cannot act on high-intent leads in real-time ("speed-to-lead" vs "lead acceleration" distinction)</li>
+    <li><strong>Evidence:</strong> See 01-root-cause-analysis.md for detailed user journey analysis</li>
+</ul>
+
+<p><strong>Sub-Issues:</strong></p>
+<ul>
+    <li>Signup Services only emits events on final form submission (not intermediate steps)</li>
+    <li>No visibility into application progress (step 1/7 completed, step 3/7 abandoned, etc.)</li>
+    <li>Marketing Ops receives "app submitted" but Sales needs "app stuck at step 5" alerts</li>
+    <li>No progress state cache (Redis/Firebase) for real-time dashboard</li>
+</ul>
+
+<hr>
+
+<h3>2. Workflow Efficiency</h3>
+
+<p><strong>Problem:</strong> Existing Sprawl, User/Data Flow</p>
+<ul>
+    <li><strong>Current State:</strong> 300+ active HubSpot workflows, many conflicting or redundant</li>
+    <li><strong>Root Cause:</strong> No governance, no documentation, no sunset policy, multiple people creating workflows over 3+ years</li>
+    <li><strong>Business Impact:</strong> 15% of contacts have sync errors due to workflow conflicts</li>
+</ul>
+
+<p><strong>Specific Conflicts Identified:</strong></p>
+<ol>
+    <li><strong>MQL Status Assignment:</strong> 3 workflows set <code>lifecyclestage = "MQL"</code> with conflicting logic</li>
+    <li><strong>Event Follow-Up:</strong> 40 individual event workflows (should be 1 template)</li>
+    <li><strong>Attribution Updates:</strong> 47 workflows reference "Primary Inbound Channel" (3 different properties)</li>
+    <li><strong>Email Triggers:</strong> Overlapping enrollment criteria causing duplicate emails</li>
+</ol>
+
+<p><strong>Symptoms:</strong></p>
+<ul>
+    <li>Workflows executing in wrong order (Workflow B overwrites Workflow A's changes)</li>
+    <li>Contacts stuck in "pending" states (waiting for workflow that was deactivated)</li>
+    <li>Property values changing unexpectedly (multiple workflows updating same property)</li>
+</ul>
+
+<hr>
+
+<h3>3. Field Maintenance</h3>
+
+<p><strong>Problem:</strong> Data Schema, Taxonomy, & Sync Properties</p>
+<ul>
+    <li><strong>Current State:</strong> No canonical schemas between systems, same concept represented 4 different ways</li>
+    <li><strong>Root Cause:</strong> Each system (Signup Services, Warehouse, Salesforce, HubSpot) uses different field names/formats</li>
+    <li><strong>Business Impact:</strong> 15% sync error rate HubSpot ↔ Salesforce</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Concept</th>
+            <th>Signup Services</th>
+            <th>Warehouse</th>
+            <th>Salesforce</th>
+            <th>HubSpot</th>
+            <th>Issue</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>User Progress</strong></td>
+            <td><code>application_step</code> (int 1-7)</td>
+            <td><code>app_progress_pct</code> (float 0-100)</td>
+            <td><code>Application_Status__c</code> (picklist)</td>
+            <td><code>app_status_v2</code> (text)</td>
+            <td>No ETL contract, breaks on changes</td>
+        </tr>
+        <tr>
+            <td><strong>Company Size</strong></td>
+            <td><code>employee_count</code> (int)</td>
+            <td><code>company_size</code> (text range)</td>
+            <td><code>NumberOfEmployees</code> (int)</td>
+            <td><code>company_employee_count</code> (number)</td>
+            <td>Type mismatches cause sync failures</td>
+        </tr>
+        <tr>
+            <td><strong>Attribution</strong></td>
+            <td><code>utm_campaign</code> (text)</td>
+            <td><code>first_touch_campaign</code> (text)</td>
+            <td><code>Lead_Source_Campaign__c</code> (text)</td>
+            <td>3 different properties (legacy, L3, native)</td>
+            <td>Conflicting data, 47 workflows broken</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Specific Property Issues:</strong></p>
+<ul>
+    <li><strong>Tier 5 (Legacy/Unknown):</strong> ~200 properties with 0% fill rate, no documentation, unknown purpose</li>
+    <li><strong>Orphaned Mappings:</strong> HubSpot properties that sync to deleted Salesforce fields (causes errors)</li>
+    <li><strong>Type Mismatches:</strong> Text → Picklist, Date format differences (MM/DD/YYYY vs YYYY-MM-DD)</li>
+</ul>
+
+<hr>
+
+<h3>4. Lifecycle Campaigns (Demand Generation)</h3>
+
+<p><strong>Problem:</strong> Poorly Defined Audience Goals, Target Operator Discrepancies</p>
+<ul>
+    <li><strong>Current State:</strong> Role defined as "Lifecycle Marketing Manager" but Leadership wants Demand Generation</li>
+    <li><strong>Root Cause:</strong> CRO (Tommy McNulty) focused on TOF/pipeline, JD asked for MOF/BOF expertise</li>
+    <li><strong>Business Impact:</strong> 3 qualified candidates (7/7 scores) rejected due to strategic misalignment</li>
+</ul>
+
+<p><strong>Organizational Questions (Unanswered):</strong></p>
+<ul>
+    <li>What team owns the data infrastructure? (Eng? Data? RevOps? Marketing Ops?)</li>
+    <li>What team owns tool acquisition / experimentation? (Growth? Marketing?)</li>
+    <li>How does the org support MOF/BOF initiatives? (No budget, no ownership)</li>
+    <li>Who defines lifecycle stages? (RevOps? Marketing Ops? Sales?)</li>
+</ul>
+
+<p><strong>Role Clarity Needed:</strong></p>
+<ul>
+    <li><strong>Growth:</strong> Rapid customer acquisition, short-term testing, TOF/MID-funnel optimization, paid acquisition, SEO, CRO
+        <ul>
+            <li>Metrics: CAC, MQL/SQL volume, conversion rates, acquisition velocity</li>
+        </ul>
+    </li>
+    <li><strong>Lifecycle:</strong> Long-term retention, customer journey orchestration, post-purchase activation, retention, expansion, winback
+        <ul>
+            <li>Metrics: LTV, churn rate, retention, engagement, expansion revenue</li>
+        </ul>
+    </li>
+</ul>
+
+<p><strong>Current Gap:</strong> Growth team has zero direct reports, Christopher (Marketing Ops) reports to Anthony (RevOps) not Jeremy (Growth)</p>
+
+<hr>
+
+<h3>5. Database Cleanup</h3>
+
+<p><strong>Problem:</strong> Tiering & Value Per Contact / LTV</p>
+<ul>
+    <li><strong>Current State:</strong> Contact database includes 3+ years of dead contacts, skewing metrics</li>
+    <li><strong>Root Cause:</strong> No sunset policy, no contact scoring, no archival process</li>
+    <li><strong>Business Impact:</strong> Inaccurate property fill rates (24% fill rate includes 70% dead contacts → actual 8% for live contacts)</li>
+</ul>
+
+<p><strong>Specific Issues:</strong></p>
+<ul>
+    <li><strong>Property Fill Rate Bias:</strong> "Primary Inbound Channel" shows 24% filled, but:
+        <ul>
+            <li>Dead contacts (3+ years old): 90% of database, 8% fill rate</li>
+            <li>Active contacts (&lt; 6 months): 10% of database, 85% fill rate</li>
+            <li>Reporting: "Only 24% of contacts have attribution" → Misleading, live contacts have 85%</li>
+        </ul>
+    </li>
+    <li><strong>HubSpot Cost Bloat:</strong> Paying per contact, but 70% are dead (never converted, 3+ years inactive)</li>
+    <li><strong>List Segmentation:</strong> Dynamic lists include dead contacts, inflating counts</li>
+</ul>
+
+<p><strong>Need:</strong></p>
+<ul>
+    <li>Contact tiering (Tier 1: Customers, Tier 2: Active leads, Tier 3: Nurture, Tier 4: Dead)</li>
+    <li>LTV scoring (prioritize high-value accounts)</li>
+    <li>Archival process (move Tier 4 to separate database, remove from HubSpot)</li>
+</ul>
+
+<hr>
+
+<h2>Potential Solutions</h2>
+
+<h3>Intermediate Goals (Skydog Deliverables - 2-3 Months)</h3>
+
+<h4>1. Cleaner, More Reliable Data</h4>
+
+<p><strong>Skydog Scope:</strong></p>
+<ul>
+    <li>Audit all existing data flows and automation rules (Phase 1)</li>
+    <li>Implement data validation and normalization standards (Phase 2)</li>
+    <li>Eliminate redundant workflows, properties, and legacy fields (Phase 2)</li>
+</ul>
+
+<p><strong>Approach:</strong></p>
+
+<p><strong>1. Workflow Audit</strong> (Phase 1, Weeks 1-2):</p>
+<ul>
+    <li>Pull all workflows via API, export to Airtable</li>
+    <li>For each workflow, extract:
+        <ul>
+            <li>Trigger criteria (which properties)</li>
+            <li>Enrollment criteria (which lists/properties)</li>
+            <li>Actions (which properties set/updated)</li>
+            <li>Last modification date, last enrollment date</li>
+            <li>Total enrolled (all-time and last 90 days)</li>
+        </ul>
+    </li>
+    <li>Output: Dependency matrix showing which properties are used where</li>
+</ul>
+
+<p><strong>2. Property Schema Rationalization</strong> (Phase 1, Weeks 2-3):</p>
+<ul>
+    <li>Categorize all properties:
+        <ul>
+            <li><strong>Tier 1: Core</strong> (name, email, company) - Keep</li>
+            <li><strong>Tier 2: Attribution</strong> (source, campaign) - Keep but standardize</li>
+            <li><strong>Tier 3: Lifecycle</strong> (MQL date, SQL date) - Rationalize</li>
+            <li><strong>Tier 4: Integration</strong> (SFDC ID, Snowflake ID) - Audit sync</li>
+            <li><strong>Tier 5: Legacy/Unknown</strong> - Archive candidates</li>
+        </ul>
+    </li>
+    <li>For each property, document:
+        <pre>Property: application_status_signup
+Used in Workflows: [ID 123, ID 456, ID 789]
+Used in Forms: [Contact Form, Event Registration]
+Fill Rate: 12% (of non-dead contacts)
+Last Modified: 18 months ago
+Created By: [Unknown]
+Purpose: [Undocumented]
+Recommendation: [Archive - deprecated by app_status_v2]</pre>
+    </li>
+</ul>
+
+<p><strong>3. Workflow Consolidation</strong> (Phase 2, Weeks 4-5):</p>
+<ul>
+    <li>Consolidate 40 event workflows → 1 template workflow (uses dynamic properties)</li>
+    <li>Merge 3 MQL workflows → 1 master workflow (clear criteria)</li>
+    <li>Deactivate orphaned workflows (0 enrollments in 90 days: ~50 workflows)</li>
+    <li>Deactivate duplicates ("Copy of...", "Test...": ~20 workflows)</li>
+    <li><strong>Target:</strong> 300+ active workflows → &lt;100 workflows</li>
+</ul>
+
+<p><strong>DRI:</strong></p>
+<ul>
+    <li><strong>Christopher (Marketing Ops):</strong> HubSpot workflow audit, property rationalization</li>
+    <li><strong>Skydog Ops:</strong> Audit tool build, analysis, recommendations</li>
+</ul>
+
+<hr>
+
+<h4>2. Faster Speed to Lead</h4>
+
+<p><strong>Skydog Scope:</strong></p>
+<ul>
+    <li>Reduce lag between lead signup and HubSpot visibility (Phase 2)</li>
+    <li>Improve sync latency between HubSpot, Salesforce, and self-serve signup funnel (Phase 2)</li>
+    <li>Establish full visibility into what data comes in, when, and through which system (Phase 2)</li>
+</ul>
+
+<p><strong>Approach:</strong></p>
+
+<p><strong>1. Current State Analysis</strong> (Phase 1, Week 2):</p>
+<ul>
+    <li>Map data flow: Signup Services → Warehouse → HubSpot → Salesforce</li>
+    <li>Measure latency at each step (webhook delays, batch sync frequencies, API rate limits)</li>
+    <li>Identify bottlenecks (is 40-minute lag due to warehouse batch? Or HubSpot sync?)</li>
+    <li>Document existing Salesforce APEX automation (Wexpert internal analysis reference)</li>
+</ul>
+
+<p><strong>2. Salesforce Sync Optimization</strong> (Phase 2, Weeks 5-6):</p>
+<ul>
+    <li><strong>Field Mapping Fixes:</strong>
+        <ul>
+            <li>Text → Picklist mismatches (e.g., HubSpot <code>industry</code> text → SFDC <code>Industry</code> picklist)</li>
+            <li>Missing required fields (e.g., SFDC requires <code>Company</code>, 30% of HubSpot contacts missing)</li>
+            <li>Date format conversions (MM/DD/YYYY → YYYY-MM-DD)</li>
+        </ul>
+    </li>
+    <li><strong>Duplicate Detection:</strong>
+        <ul>
+            <li>Enable Salesforce duplicate rules (block duplicates based on email)</li>
+            <li>Add HubSpot dedupe logic before sync (check if SFDC ID exists, search for email match)</li>
+        </ul>
+    </li>
+    <li><strong>Sync Monitoring Dashboard:</strong>
+        <ul>
+            <li>Real-time visibility (Airtable table: Date, Object, Status, Error Message)</li>
+            <li>Slack alerts (if error rate &gt;10% in 1-hour window)</li>
+            <li>Weekly report (automated email: last 7 days sync stats, error rate trend)</li>
+        </ul>
+    </li>
+    <li><strong>Target:</strong> 15% error rate → &lt;5% error rate</li>
+</ul>
+
+<p><strong>3. HubSpot Sync Configuration Review</strong> (Phase 2, Week 6):</p>
+<ul>
+    <li>Which objects sync? (Contacts only? Or Contacts + Companies + Deals?)</li>
+    <li>Sync frequency? (Real-time vs. batch?)</li>
+    <li>Duplicate detection rules?</li>
+    <li>Identify configuration issues causing errors</li>
+</ul>
+
+<p><strong>DRI:</strong></p>
+<ul>
+    <li><strong>Anthony (RevOps):</strong> Salesforce field mapping, duplicate rules, APEX automation review</li>
+    <li><strong>Skydog Ops:</strong> Sync analysis, optimization recommendations, monitoring dashboard build</li>
+    <li><strong>Christopher (Marketing Ops):</strong> HubSpot configuration, property mapping</li>
+</ul>
+
+<p><strong>Note:</strong> Reducing 40-minute lag to &lt;5 minutes requires <strong>Engineering</strong> involvement (event emission changes in Signup Services). This is out of scope for Skydog, but Skydog can document requirements and recommend architecture (see Phase 3 Advisory).</p>
+
+<hr>
+
+<h2>Interaction Model (DRIs by Task)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Task / Deliverable</th>
+            <th>Primary DRI</th>
+            <th>Supporting DRI</th>
+            <th>Approval Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="4"><strong>Phase 1: Audit</strong></td>
+        </tr>
+        <tr>
+            <td>HubSpot Workflow Audit</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>Property Schema Audit</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>Salesforce Sync Analysis</td>
+            <td>Skydog Ops</td>
+            <td>Anthony (RevOps)</td>
+            <td>Anthony</td>
+        </tr>
+        <tr>
+            <td>Cross-Functional Workshop</td>
+            <td>Christopher</td>
+            <td>Skydog Ops (facilitate)</td>
+            <td>Leadership (Tommy, Jeremy)</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Phase 2: Implementation</strong></td>
+        </tr>
+        <tr>
+            <td>Workflow Consolidation</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>Salesforce Sync Fixes</td>
+            <td>Anthony (RevOps)</td>
+            <td>Skydog Ops</td>
+            <td>Anthony</td>
+        </tr>
+        <tr>
+            <td>HubSpot Sync Configuration</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Skydog Ops</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>Sync Monitoring Dashboard</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>Attribution Migration</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher + Leadership</td>
+        </tr>
+        <tr>
+            <td>Email Component Library</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td>CI/CD Pipeline</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Christopher</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Phase 3: Advisory</strong></td>
+        </tr>
+        <tr>
+            <td>Real-Time Event Architecture</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Engineering (review), Leadership (budget approval)</td>
+        </tr>
+        <tr>
+            <td>Progress State Service Design</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Engineering (review)</td>
+        </tr>
+        <tr>
+            <td>Marketing Automation Migration Plan</td>
+            <td>Skydog Ops</td>
+            <td>Christopher (Marketing Ops)</td>
+            <td>Leadership (decision)</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>DRI Definitions</h3>
+<ul>
+    <li><strong>Primary DRI:</strong> Owns task execution, accountable for delivery</li>
+    <li><strong>Supporting DRI:</strong> Provides input, reviews work, answers questions</li>
+    <li><strong>Approval Required:</strong> Sign-off needed before considering task complete</li>
+</ul>
+
+<h3>Communication Channels</h3>
+<ul>
+    <li><strong>Weekly Sync Calls:</strong> Every Monday, 30 min (Christopher + Anthony + Skydog Lead)</li>
+    <li><strong>Slack:</strong> <code>#skydog-engagement</code> (async questions, daily updates)</li>
+    <li><strong>Phase Demos:</strong> End of Phase 1, Phase 2, Phase 3 (60 min, stakeholders + Skydog)</li>
+</ul>
+
+<hr>
+
+<h2>Milestones & Timeline</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Milestone</th>
+            <th>Target Date</th>
+            <th>Deliverables</th>
+            <th>Success Criteria</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Phase 1 Complete</strong></td>
+            <td>Week 3 (Dec 22, 2025)</td>
+            <td>Workflow audit, Property audit, Salesforce sync analysis, Cross-functional workshop</td>
+            <td>Audit reports delivered, RACI chart agreed, Phase 2 priorities confirmed</td>
+        </tr>
+        <tr>
+            <td><strong>Phase 2 Midpoint</strong></td>
+            <td>Week 5 (Jan 12, 2026)</td>
+            <td>50% workflow consolidation, Salesforce sync fixes started</td>
+            <td>Workflows &lt;150, Sync error rate improving (10% → 7%)</td>
+        </tr>
+        <tr>
+            <td><strong>Phase 2 Complete</strong></td>
+            <td>Week 7 (Jan 26, 2026)</td>
+            <td>Workflows &lt;100, Sync error rate &lt;5%, Attribution migrated, CI/CD live</td>
+            <td>All Phase 2 acceptance criteria met, Christopher sign-off</td>
+        </tr>
+        <tr>
+            <td><strong>Phase 3 Complete</strong></td>
+            <td>Week 10 (Feb 16, 2026)</td>
+            <td>Real-time event PRD, Progress state design, Migration plan (optional)</td>
+            <td>Engineering has specs for long-term fixes, Leadership has decision framework</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Total Timeline:</strong> 10 weeks (December 2, 2025 - February 16, 2026)</p>
+
+<hr>
+
+<div class="metadata">
+    <p><strong>Document Maintained In:</strong></p>
+    <ul>
+        <li><strong>GitHub:</strong> /Users/christopher.cooper/Documents/GitHub/mops-projects/ (version controlled)</li>
+        <li><strong>Google Drive:</strong> /My Drive/MOps Infrastructure Project/ (collaborative editing)</li>
+    </ul>
+    <p><strong>Next Review:</strong> Upon Skydog contract signing (target: November 25, 2025)</p>
+</div>
+
+</body>
+</html>
