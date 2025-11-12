@@ -17,6 +17,71 @@ and this project adheres to semantic versioning principles.
 
 ---
 
+## [1.2.0] - 2025-11-12
+
+### Added - Skydog Organizing Document & Folder Sync
+
+#### Skydog Engagement Organizing Document
+**Changed By**: Christopher Cooper (via Claude Code)
+**Component**: Primary organizing document for Skydog Ops engagement
+**Description**: Created comprehensive organizing document following user-specified structure (Goals → Issues → Potential Solutions → Notes)
+**Rationale**: Replace SOW format with organizing document format, focus on what Skydog will audit and deliver in 2-3 months
+**Impact**: Clear DRI assignments, detailed audit scope, interaction model established
+
+**New File**:
+- **Skydog-Engagement-Organizing-Document.md** (~44KB):
+  - **Goals** (7 objectives): Cleaner data, faster speed-to-lead, optimize signup integration, flexibility, segmentation, lifecycle marketing, tracking/attribution
+  - **Issues** (5 categories): Lead acceleration (40-45 min lag), workflow efficiency (300+ workflows), field maintenance (schema chaos), lifecycle campaigns (role misalignment), database cleanup
+  - **Potential Solutions**: Detailed Skydog deliverables by phase (Phase 1: Audit, Phase 2: Implementation, Phase 3: Advisory)
+  - **Notes**: Tech stack context, organizational questions requiring leadership alignment
+  - **Skydog Workflow Audit Scope**: Phase 1 (Weeks 1-3), Phase 2 (Weeks 4-7), Phase 3 (Weeks 8-10)
+  - **Interaction Model**: DRI table with clear assignments (Christopher for HubSpot, Anthony for Salesforce)
+  - **Milestones & Timeline**: 10-week timeline (December 2, 2025 - February 16, 2026)
+
+**Key Features**:
+- Avoids referencing individual contributors as blockers (per user instruction)
+- Focus on Skydog audit and delivery scope
+- Clear DRI assignments for all tasks
+- Detailed Phase 1 workflow audit specifications using HubSpot API
+- Property tiering system (Tier 1-5: Core → Legacy/Unknown)
+- Salesforce sync optimization details (15% → <5% error rate target)
+
+#### Folder Structure Reconciliation
+**Changed By**: Christopher Cooper (via Claude Code)
+**Component**: GitHub ↔ Google Drive sync
+**Description**: Synchronized all project files between GitHub repository and Google Drive
+**Rationale**: Ensure both locations mirror each other for collaborative editing and version control
+**Impact**: Complete project backup, accessible to all stakeholders
+
+**Actions Taken**:
+1. Synced all 21 markdown files to Google Drive "MOps Infrastructure Project" folder
+2. Synced subdirectories: "Lifecycle Manager" and "Org Chart" folders
+3. Synced PDF files (JD - Lifecycle Marketing Manager.pdf)
+4. Verified file counts match (21 .md files in both locations)
+
+**Locations**:
+- **GitHub**: `/Users/christopher.cooper/Documents/GitHub/mops-projects/`
+- **Google Drive**: `/Users/christopher.cooper/Library/CloudStorage/GoogleDrive-christopher.cooper@rho.co/My Drive/MOps Infrastructure Project/`
+
+#### README Updates
+**Changed By**: Christopher Cooper (via Claude Code)
+**Component**: README.md
+**Description**: Updated README to reflect complete project status and reference new organizing document
+**Rationale**: Ensure README accurately reflects current state and guides stakeholders to correct documents
+**Impact**: Clear navigation for vendors (Skydog Ops) and team members
+
+**Changes**:
+1. Added Skydog-Engagement-Organizing-Document.md to documentation index (highlighted as primary document)
+2. Added 06-vendor-sow-skydog-REFINED.md reference (12-week extended engagement)
+3. Updated all file statuses to ✅ Complete (files 03-12 now complete)
+4. Updated "For Vendors (Skydog Ops)" section with organizing document as starting point
+
+**Git Commits**:
+- Commit bb5b23d: "docs: Add refined Skydog SOW with 12-week timeline and cross-functional responsibilities"
+- Commit 86b1a7d: "docs: Update README with Skydog organizing document and complete status for all files"
+
+---
+
 ## [1.1.0] - 2025-11-12
 
 ### Added - Remaining Documentation Files
